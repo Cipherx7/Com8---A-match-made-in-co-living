@@ -1,0 +1,8 @@
+{
+  "name": "Remix Remix CoM8",
+  "description": "People-first swipe-to-match flatmate, roommate, and PG mate MVP with instant mobile sign-in, lifestyle compatibility reports, Gemini AI insights, and OpenStreetMap.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

@@ -1,0 +1,257 @@
+{
+  "entities": {
+    "UserLifestyleProfile": {
+      "title": "UserLifestyleProfile",
+      "description": "Authenticated user's CoM8 flatmate lifestyle quiz answers, budget, city, and trust metadata.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Firebase Auth UID of the profile owner." },
+        "displayName": { "type": "string", "description": "User display name." },
+        "city": { "type": "string", "description": "Target city (Pune, Mumbai, Bengaluru, Hyderabad, Delhi NCR)." },
+        "roleType": { "type": "string", "enum": ["SEEKING_FLAT", "HAS_FLAT", "PG_MATE"], "description": "Flatmate intent." },
+        "monthlyBudget": { "type": "integer", "description": "Monthly rent budget in INR." },
+        "sleepSchedule": { "type": "string", "enum": ["EARLY_BIRD", "BALANCED", "NIGHT_OWL"] },
+        "cleanlinessLevel": { "type": "integer", "description": "Cleanliness preference 1 to 5." },
+        "guestPolicy": { "type": "string", "enum": ["NO_GUESTS", "WEEKENDS_OK", "CHILL_ANYTIME"] },
+        "foodHabit": { "type": "string", "enum": ["VEG_ONLY", "EGGETARIAN", "NON_VEG_OK"] },
+        "bio": { "type": "string", "description": "Short personal bio and living vibe." },
+        "quizCompleted": { "type": "boolean" },
+        "verifiedBadge": { "type": "boolean" },
+        "trustScore": { "type": "integer", "description": "Trust score from 0 to 100." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server timestamp on creation." },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Server timestamp on update." }
+      },
+      "required": [
+        "userId",
+        "displayName",
+        "city",
+        "roleType",
+        "monthlyBudget",
+        "sleepSchedule",
+        "cleanlinessLevel",
+        "guestPolicy",
+        "foodHabit",
+        "quizCompleted",
+        "verifiedBadge",
+        "trustScore",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "FlatmateListing": {
+      "title": "FlatmateListing",
+      "description": "Published flatmate, roommate, or PG mate card with locality coordinates and lifestyle attributes.",
+      "type": "object",
+      "properties": {
+        "ownerId": { "type": "string", "description": "Creator UID." },
+        "name": { "type": "string" },
+        "age": { "type": "integer" },
+        "occupation": { "type": "string" },
+        "roleType": { "type": "string", "enum": ["SEEKING_FLAT", "HAS_FLAT", "PG_MATE"] },
+        "city": { "type": "string" },
+        "locality": { "type": "string" },
+        "monthlyRent": { "type": "integer" },
+        "latitude": { "type": "number" },
+        "longitude": { "type": "number" },
+        "sleepSchedule": { "type": "string", "enum": ["EARLY_BIRD", "BALANCED", "NIGHT_OWL"] },
+        "cleanlinessLevel": { "type": "integer" },
+        "guestPolicy": { "type": "string", "enum": ["NO_GUESTS", "WEEKENDS_OK", "CHILL_ANYTIME"] },
+        "foodHabit": { "type": "string", "enum": ["VEG_ONLY", "EGGETARIAN", "NON_VEG_OK"] },
+        "bio": { "type": "string" },
+        "moveInTimeline": { "type": "string" },
+        "trustScore": { "type": "integer" },
+        "verified": { "type": "boolean" },
+        "isPublic": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "ownerId",
+        "name",
+        "age",
+        "occupation",
+        "roleType",
+        "city",
+        "locality",
+        "monthlyRent",
+        "latitude",
+        "longitude",
+        "sleepSchedule",
+        "cleanlinessLevel",
+        "guestPolicy",
+        "foodHabit",
+        "bio",
+        "moveInTimeline",
+        "trustScore",
+        "verified",
+        "isPublic",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "SwipeRecord": {
+      "title": "SwipeRecord",
+      "description": "User-isolated swipe decision and match shortlist record.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "listingId": { "type": "string" },
+        "decision": { "type": "string", "enum": ["LIKED", "PASSED"] },
+        "status": { "type": "string", "enum": ["SAVED", "INTRO_SENT", "PASSED"] },
+        "targetName": { "type": "string" },
+        "targetCity": { "type": "string" },
+        "targetLocality": { "type": "string" },
+        "targetRent": { "type": "integer" },
+        "compatibilityScore": { "type": "integer" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "userId",
+        "listingId",
+        "decision",
+        "status",
+        "targetName",
+        "targetCity",
+        "targetLocality",
+        "targetRent",
+        "compatibilityScore",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "MatchMessage": {
+      "title": "MatchMessage",
+      "description": "Chat message inside a user's matched flatmate conversation.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "senderRole": { "type": "string", "enum": ["ME", "MATE"] },
+        "text": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "senderRole", "text", "createdAt"]
+    },
+    "ChatThread": {
+      "title": "ChatThread",
+      "description": "Shared two-user conversation metadata between matched flatmates.",
+      "type": "object",
+      "properties": {
+        "chatId": { "type": "string" },
+        "participantIds": { "type": "array", "description": "Sorted pair of the two participant Firebase Auth UIDs." },
+        "initiatorId": { "type": "string" },
+        "initiatorName": { "type": "string" },
+        "listingId": { "type": "string" },
+        "targetUserId": { "type": "string" },
+        "targetName": { "type": "string" },
+        "targetCity": { "type": "string" },
+        "targetLocality": { "type": "string" },
+        "targetRent": { "type": "integer" },
+        "compatibilityScore": { "type": "integer" },
+        "lastMessageText": { "type": "string" },
+        "lastSenderId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "chatId",
+        "participantIds",
+        "initiatorId",
+        "initiatorName",
+        "listingId",
+        "targetUserId",
+        "targetName",
+        "targetCity",
+        "targetLocality",
+        "targetRent",
+        "compatibilityScore",
+        "lastMessageText",
+        "lastSenderId",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "ChatMessage": {
+      "title": "ChatMessage",
+      "description": "Real-time message inside a shared two-user chat thread.",
+      "type": "object",
+      "properties": {
+        "messageId": { "type": "string" },
+        "chatId": { "type": "string" },
+        "participantIds": { "type": "array", "description": "Denormalized sorted pair of participant UIDs matching parent ChatThread." },
+        "senderId": { "type": "string" },
+        "senderName": { "type": "string" },
+        "text": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "messageId",
+        "chatId",
+        "participantIds",
+        "senderId",
+        "senderName",
+        "text",
+        "createdAt"
+      ]
+    },
+    "UserReport": {
+      "title": "UserReport",
+      "description": "Inappropriate content or user safety report filed from a chat conversation.",
+      "type": "object",
+      "properties": {
+        "reportId": { "type": "string" },
+        "reporterId": { "type": "string", "description": "Firebase Auth UID of the reporting user." },
+        "reportedUserId": { "type": "string" },
+        "reportedName": { "type": "string" },
+        "listingId": { "type": "string" },
+        "chatId": { "type": "string" },
+        "reason": { "type": "string" },
+        "details": { "type": "string" },
+        "status": { "type": "string", "enum": ["OPEN"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": [
+        "reportId",
+        "reporterId",
+        "reportedUserId",
+        "reportedName",
+        "listingId",
+        "chatId",
+        "reason",
+        "details",
+        "status",
+        "createdAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserLifestyleProfile" },
+      "description": "Private user lifestyle profile and quiz answers owned by userId."
+    },
+    "/users/{userId}/swipes/{listingId}": {
+      "schema": { "$ref": "#/entities/SwipeRecord" },
+      "description": "Per-user swipe history and saved flatmate matches."
+    },
+    "/users/{userId}/swipes/{listingId}/messages/{messageId}": {
+      "schema": { "$ref": "#/entities/MatchMessage" },
+      "description": "Per-user match chat thread messages."
+    },
+    "/chats/{chatId}": {
+      "schema": { "$ref": "#/entities/ChatThread" },
+      "description": "Shared two-user conversation thread metadata scoped to two participantIds."
+    },
+    "/chats/{chatId}/messages/{messageId}": {
+      "schema": { "$ref": "#/entities/ChatMessage" },
+      "description": "Shared real-time messages inside a two-user conversation."
+    },
+    "/reports/{reportId}": {
+      "schema": { "$ref": "#/entities/UserReport" },
+      "description": "User safety and inappropriate content reports filed from chat threads."
+    },
+    "/listings/{listingId}": {
+      "schema": { "$ref": "#/entities/FlatmateListing" },
+      "description": "Flatmate and PG mate discovery listings without PII."
+    }
+  }
+}
