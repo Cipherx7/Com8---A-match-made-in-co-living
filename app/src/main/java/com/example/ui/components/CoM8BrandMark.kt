@@ -81,18 +81,30 @@ fun CoM8Wordmark(
     onDarkBackground: Boolean = false
 ) {
     val tokens = CoM8ThemeTokens.colors
+    val iconShape = RoundedCornerShape(10.dp)
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         Image(
-            painter = painterResource(id = com.example.R.drawable.com8_launcher_icon_1794577251700),
+            painter = painterResource(id = com.example.R.drawable.com8_brand_launcher_icon_1794810825878),
             contentDescription = "CoM8 logo",
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .size(if (compact) 32.dp else 36.dp)
-                .clip(RoundedCornerShape(10.dp))
+                .clip(iconShape)
+                .then(
+                    if (onDarkBackground) {
+                        Modifier.border(
+                            width = 1.dp,
+                            color = Color(0xFF3CC9B0).copy(alpha = 0.35f),
+                            shape = iconShape
+                        )
+                    } else {
+                        Modifier
+                    }
+                )
         )
         Text(
             text = "CoM8",
